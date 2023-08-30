@@ -10,44 +10,45 @@
                     <el-option v-for="item in options3" :key="item.label" :label="item.label" :value="item.label">
                     </el-option>
                 </el-select>
+                <input type="file" name="file1" id="myfile" class="file1">
                 <el-button type="success" @click="getarray" class="btn">确认</el-button>
 
             </template>
 
 
-            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
-                class="demo-ruleForm">
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="阈值" prop="threshold">
-                    <el-input v-model="ruleForm.threshold" placeholder="请输入内容"></el-input>
+                    <el-input v-model="ruleForm.threshold" placeholder="请输入阈值(0-1)"></el-input>
                 </el-form-item>
                 <el-form-item label="窗长" prop="window">
-                    <el-input v-model="ruleForm.window" placeholder="请输入窗长"></el-input>
+                    <el-input v-model="ruleForm.window" placeholder="请输入窗长(s)"></el-input>
                 </el-form-item>
                 <el-form-item label="窗移" prop="windows">
-                    <el-input v-model="ruleForm.windows" placeholder="请输入窗移"></el-input>
+                    <el-input v-model="ruleForm.windows" placeholder="请输入窗移(小于窗长 s )"></el-input>
                 </el-form-item>
                 <template>
                     <el-form-item label="频段" prop="band">
                         <el-select v-model="ruleForm.band" placeholder="请选择频段" class="select1">
-                            <el-option v-for="item in options1" :key="item.value1" :label="item.label"
-                                :value="item.value1">
+                            <el-option v-for="item in options1" :key="item.value1" :label="item.label" :value="item.value1">
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="数据" prop="band">
                         <el-select v-model="ruleForm.label" placeholder="请选择数据" class="select1">
-                            <el-option v-for="item in options2" :key="item" :label="item" :value="item">
-                            </el-option>
+                            <el-option label="01.edf" value="shanghai"></el-option>
+                            <el-option label="02.edf" value="beijing"></el-option>
                         </el-select>
                     </el-form-item>
                 </template>
                 <el-scrollbar>
                     <h3 class="title">电极选择</h3>
+                    <div class="button"><Button></Button></div>
+
                     <div class="choice">
                         <div v-for="item in arr2">
                             <el-checkbox-group v-model="checkboxGroup1" v-if="isReloadData">
                                 <el-checkbox-button v-for="electrode in item" :label="electrode" :key="electrode">{{
-                                        electrode
+                                    electrode
                                 }}
                                 </el-checkbox-button>
                             </el-checkbox-group>
@@ -62,13 +63,43 @@
             </el-form>
 
         </el-card>
+        <el-card>
+            <div>
+                <h1>
+                    历史记录
+                </h1>
+                <el-table :data="tableData" stripe style="width: 100%">
+                    <el-table-column prop="date" label="日期" width="180">
+                    </el-table-column>
+                    <el-table-column prop="name" label="姓名" width="180">
+                    </el-table-column>
+                    <el-table-column prop="threshold" label="阈值" width="180">
+                    </el-table-column>
+                    <el-table-column prop="windowlen" label="窗长" width="180">
+                    </el-table-column>
+                    <el-table-column prop="windowstep" label="窗移" width="180">
+                    </el-table-column>
+                    <el-table-column prop="interest" label="频段" width="180">
+                    </el-table-column>
+                    <el-table-column prop="state1" label="处理状态" width="180">
+                    </el-table-column>
+                    <el-table-column align="right">
+                        <el-button size="mini" @click="show">详情</el-button>
+                    </el-table-column>
+
+                </el-table>
+            </div>
+        </el-card>
 
     </div>
-
 </template>
 <script>
+import Button from '../components/Button.vue'
 const arr1 = [];
 export default {
+    components: {
+        Button,
+    },
     data() {
         var validatethreshold = (rule, value, callback) => {
             if (value === "")
@@ -92,6 +123,15 @@ export default {
         }
 
         return {
+            tableData: [{
+                date: '',
+                name: '',
+                threshold: '',
+                windowlen: '',
+                windowstep: '',
+                interest: '',
+                state1: '完成'
+            }],
             rules: {
                 threshold: [
                     { required: true, message: '请输入0-1之间的数', trigger: 'blur' },
@@ -125,7 +165,6 @@ export default {
                 value1: 6,
                 label: 'all(1-80Hz)'
             }],
-            options2: [],
             options3: [{
                 label: '发作间期'
             }, {
@@ -146,6 +185,8 @@ export default {
     },
     mounted() {
         this.getname()
+        this.getnetwork();
+        this.timer = setInterval(this.getnetwork(), 6000);
     },
     methods: {
         onSubmit(form) {
@@ -178,12 +219,25 @@ export default {
             this.arr2 = [];
             this.options2 = []
         },
+        getnetwork() {
+            var that = this
+            var name = this.$cookie.get('name')
+            //网络请求获取数据axios
+            this.$axios.post("/table/history", name)
+                .then(function (res) {
+                    console.log(res.data)
+                    that.tableData = res.data
+                }).catch(function (err) {
+                    console.log(err)
+                })
+        },
 
         getarray() {
             const that = this
             var param = new FormData()
             var param1 = this.value
             var param2 = this.ruleForm.timer
+            param.append("file", $('#myfile')[0].files[0])
             param.append('name', param1)
             param.append('timer', param2)
             this.$axios.post("/table/get_name", param).then(function (res) {
@@ -192,15 +246,16 @@ export default {
                 that.arr3 = res.data['eegdata']
                 console.log(res.data['eegdata'])
                 // console.log(that.arr2)
-                for (var i = 0; i < that.arr3.length; i++) {
-                    // arr1[i] = that.arr2[i]
-                    that.options2.push(that.arr3[i])
-                }
+                // for (var i = 0; i < that.arr3.length; i++) {
+                //     // arr1[i] = that.arr2[i]
+                //     that.options2.push(that.arr3[i])
+                // }
                 console.log(that.options2)
             }).catch(function (err) {
                 console.log(err)
             })
             this.reloadpart()
+            alert("提交成功")
         },
         onsubmit() {
             let param = new FormData();
@@ -230,6 +285,9 @@ export default {
             this.$nextTick(() => {
                 this.isReloadData = true
             })
+        },
+        show() {
+            this.$router.push("/Collect").catch(() => { });
         }
     }
 }
@@ -266,9 +324,14 @@ export default {
 .demo-ruleForm {
     margin-top: 10px;
     font-size: 20px;
+    width: 964px;
 }
 
 .el-checkbox-group {
     margin-top: 5px;
+}
+
+.button {
+    width: 100%;
 }
 </style>

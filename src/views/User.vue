@@ -35,6 +35,13 @@
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
+            <i class="el-icon-coordinate"></i>
+            所属科室
+          </template>
+          {{ Object1.department }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
             <i class="el-icon-date"></i>
             注册日期
           </template>
@@ -42,7 +49,17 @@
         </el-descriptions-item>
       </el-descriptions>
       <el-button type="primary" @click="openalert">修改信息</el-button>
+      <el-button type="danger" @click="out">退出登录</el-button>
     </el-card>
+    <el-dialog title="提示" :visible.sync="dialogVisible1">
+      <div>
+        是否退出登录？
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible1 = false">取 消</el-button>
+        <el-button type="primary" @click="confirm1">确 定</el-button>
+      </span>
+    </el-dialog>
 
     <el-dialog title="个人信息修改" :visible.sync="dialogVisible">
       <div>
@@ -58,6 +75,9 @@
           </el-form-item>
           <el-form-item label="电话号码">
             <el-input v-model="Object1.phone"></el-input>
+          </el-form-item>
+          <el-form-item label="所属科室">
+            <el-input v-model="Object1.department"></el-input>
           </el-form-item>
           <el-form-item label="注册日期">
             <el-input v-model="Object1.createDate"></el-input>
@@ -83,9 +103,11 @@ export default {
         age: '',
         email: '',
         phone: '',
+        department:'',
         createDate: '',
       }],
       dialogVisible: false,
+      dialogVisible1:false,
     };
   },
   mounted() {
@@ -106,6 +128,9 @@ export default {
     openalert() {
       this.dialogVisible = true
     },
+    out() {
+      this.dialogVisible1 = true
+    },
     confirm() {//确认修改
             console.log(this.Object1.createDate)
             console.log(this.Object1.name)
@@ -118,7 +143,8 @@ export default {
                 name: this.Object1.name,
                 age: this.Object1.age,
                 phone: this.Object1.phone,
-                email: this.Object1.email,   
+                email: this.Object1.email, 
+                department:this.Object1.department  
             })
                 .then(function (res) {
                     that.getnetwork()
@@ -129,6 +155,9 @@ export default {
                 })
             this.dialogVisible = false;
         },
+        confirm1(){
+          this.$router.push("/login").catch(() => { });
+        }
   }
 
 };
@@ -136,9 +165,6 @@ export default {
 <style scoped>
 
 
-/* .margin-top{
-  display: flex;
-} */
 .el-descriptions__body {
   width: 100%;
 }

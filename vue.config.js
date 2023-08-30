@@ -11,7 +11,7 @@ module.exports = {
     proxy: {
       "/api": {
         // 此处的写法，目的是为了 将 /api 替换成http://10.224.130.115:5000/login
-        target: "http://10.224.130.115:5000/login",
+        target: "http://47.108.220.136:5000/login",
         // 允许跨域
         changeOrigin: true,
         ws: true,
@@ -21,7 +21,7 @@ module.exports = {
       },
       "/table": {
         //  /now/50953
-        target: "http://10.224.130.115:5000",
+        target: "http://47.108.220.136:5000",
         changeOrigin: true,
         ws: true,
         pathRewrite: {

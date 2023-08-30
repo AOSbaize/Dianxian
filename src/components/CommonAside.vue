@@ -1,6 +1,6 @@
 <template>
-    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-        :collapse="isCollapse" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :router="true">
+    <el-menu default-active="this.$route.path" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+        :collapse="isCollapse"  text-color="black" active-text-color="#ffd04b" :router="true" >
 
         <el-menu-item @click="clickMenu(item)" v-for="item in noChildren" :key="item.name" :index="item.name">
             <i :class="`el-icon-${item.icon}`"></i>
@@ -18,10 +18,14 @@
     </el-menu>
 </template>
 <style>
+.el-scrollbar_wrap{
+    background-color: white;
+}
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
     height: 100vh;
+
 }
 </style>
 <script>
@@ -29,13 +33,13 @@ export default {
     data() {
         return {
             menuData: [
-                {
-                    path: "/home",
-                    name: "home",
-                    label: "首页",
-                    icon: "s-home",
-                    url: "Home/Home"
-                },
+                // {
+                //     path: "/home",
+                //     name: "home",
+                //     label: "首页",
+                //     icon: "s-home",
+                //     url: "Home/Home"
+                // },
                 {
                     path: "/mall",
                     name: "mall",
@@ -43,47 +47,14 @@ export default {
                     icon: "s-custom",
                     url: "MallManage/MallManage"
                 },
-                {
-                    path: "/user",
-                    name: "user",
-                    label: "个人中心",
-                    icon: "user",
-                    url: "UserManage/UserManage"
-                },
+
                 {
                     path: "/page1",
                     name: "page1",
-                    label: "选择信息",
+                    label: "SEG数据分析",
                     icon: "thumb",
                     url: "other/PageOne",
                 },
-                {
-                    path: "/page2",
-                    name: "page2",
-                    label: "历史记录",
-                    icon: "notebook-1",
-                    url: "other/PageTwo",
-                },
-                // {
-                //     label: "其他",
-                //     icon: "location",
-                //     children: [
-                //         {
-                //             path: "/page1",
-                //             name: "page1",
-                //             label: "选择信息",
-                //             icon: "setting",
-                //             url: "other/PageOne",
-                //         },
-                //         {
-                //             path: "/page2",
-                //             name: "page2",
-                //             label: "历史记录",
-                //             icon: "setting",
-                //             url: "other/PageTwo",
-                //         }
-                //     ]
-                // }
             ]
         };
     },

@@ -7,6 +7,12 @@ import PageTwo from '../views/PageTwo.vue'
 import PageOne from '../views/PageOne.vue'
 import Login from '../views/Login.vue'
 import enroll from '../views/enroll.vue'
+import summary from '../views/summary.vue'
+import  Login1 from '../views/Login1'
+import  Choice from '../views/Choice.vue'
+import Show from '../views/Show.vue'
+import Collect from '../views/Collect.vue'
+// import Patient from '../views/patient.vue'
 // import Show from '../static/test_final.vue'
 import Vue from 'vue'
 Vue.use(VueRouter)
@@ -17,7 +23,7 @@ const routes = [
     {
         path: '/',
         component: Main,
-        redirect:'/Login',
+        redirect:'/summary',
         children:[
             //子路由
             { path: '/home',  name:'home',component: Home },//首页
@@ -33,10 +39,36 @@ const routes = [
         component:Login
     },
     {
+        path:'/login1',
+        name:'login1',
+        component:Login1
+    },
+    {
+        path:'/summary',
+        name:'summary',
+        component:summary
+    },
+    {
          path: '/enroll',
          name:'enroll',
          component:enroll
-    }
+    },
+    {
+        path: '/Choice',
+        name:'Choice',
+        component:Choice
+   },
+   {
+    path:'/Collect',
+    name:'Collect',
+    component:Collect
+},
+   {
+   path: '/Show',
+   name:'Show',
+   component:Show
+},
+
     // {
     //     path:'/show',
     //     name:'show',

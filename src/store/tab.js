@@ -1,13 +1,13 @@
 export default{
     state:{
-        isCollapse:false, //用于控制菜单的展开收起
+        isCollapse:true, //用于控制菜单的展开收起
         tabsList:[
             {
-                path: "/home",
-                name: "home",
-                label: "首页",
-                icon: "s-home",
-                url: "Home/Home"
+                path: "/mall",
+                name: "mall",
+                label: "病人管理",
+                icon: "s-custom",
+                url: "MallManage/MallManage"
             }
         ] //面包屑的数据
     },

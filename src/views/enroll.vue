@@ -93,7 +93,7 @@ export default {
                 that.get1 = res.data;
                 if (res.data = 1) {
                     alert("注册成功")
-                    that.$router.push("/login").catch(() => { });
+                    that.$router.push("/login1").catch(() => { });
                 } else {
                     alert("注册失败,请重新注册")
                     that.$router.push("/enroll").catch(() => { });
@@ -135,7 +135,7 @@ export default {
 }
 
 .building {
-    background: url("../picture/illust_106501098_20230324_105939.png");
+    background: url("../picture/heart-gd80717a43_1920.jpg");
     width: 100%;
     height: 100%;
     position: absolute;

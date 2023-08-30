@@ -61,7 +61,7 @@ export default {
 .el-aside {
   background-color: #545c64;
   color: #333;
-  background-color: #545c64;
+  background-color: white;
   text-align: center;
 }
 

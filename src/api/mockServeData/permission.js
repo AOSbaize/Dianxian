@@ -9,13 +9,13 @@ export default {
         code: 20000,
         data: {
           menu: [
-            {
-              path: '/',
-              name: 'home',
-              label: '首页',
-              icon: 's-home',
-              url: 'home/index'
-            },
+            // {
+            //   path: '/',
+            //   name: 'home',
+            //   label: '首页',
+            //   icon: 's-home',
+            //   url: 'home/index'
+            // },
             {
               path: '/mall',
               name: 'mall',
@@ -23,13 +23,13 @@ export default {
               icon: 'video-play',
               url: 'mall/index'
             },
-            {
-              path: '/user',
-              name: 'user',
-              label: '个人中心',
-              icon: 'user',
-              url: 'User/index'
-            },
+            // {
+            //   path: '/user',
+            //   name: 'user',
+            //   label: '个人中心',
+            //   icon: 'user',
+            //   url: 'User/index'
+            // },
             {
               label: '其他',
               icon: 'location',
@@ -70,7 +70,7 @@ export default {
             {
               path: '/video',
               name: 'video',
-              label: '商品管理',
+              label: '管理',
               icon: 'video-play',
               url: 'mall/index'
             }

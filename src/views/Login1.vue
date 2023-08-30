@@ -2,22 +2,23 @@
     <div id="building">
         <el-col :xm="6" :sm="8" :md="9" :lg="9"></el-col>
         <el-col :xm="12" :sm="8" :md="6" :lg="6" class="col">
-                <div class="login-container">
-                <h2 class="head">管理员登录</h2>
-                            <el-form :inline="true" :model="form" :rules="rules">
-                                <el-form-item label="管理名" prop="username">
-                                    <el-input v-model="form.username" placeholder="请输入管理员名"></el-input>
-                                </el-form-item>
-                                <el-form-item label="密码" prop="password">
-                                    <el-input type="password" v-model="form.password" placeholder="请输入密码"
-                                        class="pwd"></el-input>
-                                </el-form-item>
-                                <el-form-item>
-                                    <el-button @click="submit" style="margin-left: 6.5625rem;" type="primary">登录</el-button>
-                                </el-form-item>
-                            </el-form>
-            </div>
-
+                <div class="login-container" >
+                    <h2 class="head">用户登录</h2>
+                    <el-form :inline="true" :model="form" :rules="rules">
+                        <el-form-item label="用户名" prop="username">
+                            <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码" prop="password">
+                            <el-input type="password" v-model="form.password" placeholder="请输入密码" class="pwd"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button @click="submit1" style="margin-left: 4rem;" type="primary"
+                                class="login">登录</el-button>
+                            <el-button @click="submit2" style="margin-left: 12rem;" type="success"
+                                class="enroll">注册</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
 
         </el-col>
         <el-col :xm="6" :sm="8" :md="9" :lg="9"></el-col>
@@ -43,30 +44,36 @@ export default {
         };
     },
     methods: {
-
         //登录
-        submit() {
+        submit1() {
             var that = this;
             var param = new FormData();
             var param1 = this.form.username;
             var param2 = this.form.password;
             param.append("username", param1);
             param.append("password", param2);
-            this.$axios.post("/table/login", param).then(function (res) {
+            this.$axios.post("", param).then(function (res) {
                 console.log(res);
                 that.get1 = res.data;
                 console.log(that.get1);
                 if (that.get1 == "1") {
-                    that.$router.push("/Choice").catch(() => { });
+                    that.$router.push("").catch(() => { });
                     that.$cookie.set("name", param1, 60 * 60 * 24);
                 }
                 else {
                     alert("用户名或密码错误");
-                    that.$router.push("/login").catch(() => { });
+                    that.$router.push("/login1").catch(() => { });
                 }
             });
         },
+        submit2() {
+            this.$router.push("").catch(() => { })
+        },
+        submit2() {
+            this.$router.push("/enroll").catch(() => { })
+        }
     },
+
     handleClick(tab, event) {
         console.log(tab, event);
     },
@@ -93,7 +100,8 @@ export default {
     margin-bottom: 2.5rem;
     color: #505458;
 }
-.head{
+
+.head {
     margin: auto;
     display: flex;
     justify-content: center;
@@ -130,6 +138,6 @@ export default {
     height: 100%;
     position: absolute;
     background-size: cover;
-    
+
 }
 </style>

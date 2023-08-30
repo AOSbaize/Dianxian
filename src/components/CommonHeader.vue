@@ -7,8 +7,8 @@
             </el-breadcrumb>
             
         </div>
-        <el-tooltip content="欢迎您，admin">
-            <img src="../picture/R-C.jpg" class="header1">
+        <el-tooltip content="个人详情">
+            <img src="../picture/R-C.jpg" class="header1" @click="person">
         </el-tooltip>
 
 
@@ -24,8 +24,11 @@ export default {
     },
     methods: {
         handleMenu() {
-            this.$store.commit('collapseMenu')
-        }
+            this.$store.commit('collapseMenu') 
+        },
+        person(){
+            this.$router.push("/user").catch(() => { });
+        },
     },
     computed:{
         ...mapState({
